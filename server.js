@@ -12,6 +12,7 @@ mongoose.connect('mongodb://localhost/thosdaq');
 
 // Utilities
 var moment = require('moment');
+var passwordHash = require('password-hash');
 
 // Init middleware
 app.use(logger("tiny"));

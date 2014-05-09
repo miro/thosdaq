@@ -16,7 +16,8 @@
         "mongodb": "*",
         "mongoose": "*",
         "body-parser": "*",
-        "moment": "*"
+        "moment": "*",
+        "password-hash": "*"
     },
     "devDependencies": {
         "grunt": "^0.4.4",
