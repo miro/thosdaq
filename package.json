@@ -1,0 +1,28 @@
+{
+    "name": "kassakone",
+    "version": "0.0.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/tukkajukka/kassakone.git"
+    },
+    "contributors": [
+        "Jukka Tupamäki <tupamaki@gmail.com>"
+    ],
+    "devDependencies": {
+        "mocha": "^1.18.2",
+        "express": "^4.0.0",
+        "morgan": "^1.0.0",
+        "chai": "^1.9.1",
+        "grunt": "^0.4.4",
+        "grunt-react": "^0.8.2",
+        "grunt-contrib-watch": "^0.6.1",
+        "grunt-sass": "~0.12.1",
+        "grunt-autoprefixer": "~0.7.3"
+    },
+    "private": true,
+    "scripts": {
+        "watch": "grunt sass && grunt react && grunt watch",
+        "react": "npm run watch",
+        "server": "node server.js"
+    }
+}
