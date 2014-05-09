@@ -9,6 +9,7 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 mongoose.connect('mongodb://localhost/thosdaq');
+mongoose.set('debug', true);
 
 // Utilities
 var moment = require('moment');
@@ -29,6 +30,38 @@ var LogSchema = new Schema({
 });
 var LogModel = mongoose.model('Log', LogSchema);
 
+var UserSchema = new Schema({
+    name: String,
+    password: String
+});
+var UserModel = mongoose.model('User', UserSchema);
+
+
+// Utility functions -----------------------------------
+var validateUser = function(user, password) {
+
+    UserModel.findOne({'name': user}, 'name password', function(error, result) {
+        
+        if (error) {
+            console.log("ERROR in user authentication", ERR);
+            return false;
+        }
+
+        if (result.length === 0) {
+            console.log("no user found");
+            return false;
+        }
+
+        if (passwordHash.verify(password, result.password)) {
+            console.log("jeee");
+            return result.user;
+        }
+        else {
+            console.log("wrong password");
+            return false;
+        }
+    });
+};
 
 
 // Route handlers --------------------------------------
@@ -47,6 +80,13 @@ app.post('/log', function(req, res) {
 
     res.send(req.body);
 });
+
+app.post('/login', function(req,res) {
+    console.log(req.body.password);
+    var temp = validateUser(req.body.user, req.body.password);
+    res.send(temp, 200);
+});
+
 
 
 // -----------------------------------------------------
