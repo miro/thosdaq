@@ -1,22 +1,13 @@
-#!/usr/bin/env node
 
-/**
-	A tiny mock server for developing the Kassakone frontend.
-	
-	Start server:
-		./server.js
-		node server.js
-*/
 
 var express = require('express');
 var app = express();
 var logger = require('morgan');
+var bodyParser = require('body-parser')
 
-// Logs HTTP requests to console
 app.use(logger("tiny"));
-
-// Configure static file hosting middleware
-app.use(express.static(__dirname + '/app'));
+app.use(bodyParser());
+app.use(express.static(__dirname + '/app')); // static file hosting middleware
 
 // Mock route for mock data
 app.get('/api/mock/:filename', function(req, res) {
@@ -39,6 +30,16 @@ app.get('/api/mock/:filename', function(req, res) {
     });
 });
 
+
+
+app.post('/drink', function(req, res) {
+    console.log("drink post");
+    console.dir(req.body);
+    res.send(req.body);
+});
+
+
+// -----------------------------------------------------
 // Launch server
 var port = 3000;
 var server = app.listen(port, function() {
