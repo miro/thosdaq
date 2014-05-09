@@ -1,27 +1,33 @@
 {
-    "name": "kassakone",
-    "version": "0.0.0",
+    "name": "THOSDAQ",
+    "version": "0.0.1",
     "repository": {
         "type": "git",
-        "url": "https://github.com/tukkajukka/kassakone.git"
+        "url": "https://github.com/miro/thosdaq.git"
     },
     "contributors": [
-        "Jukka Tupamäki <tupamaki@gmail.com>"
+        "Miro Nieminen <miro.nieminen@gmail.com"
     ],
+    "dependencies": {
+        "express": "~4.0.0",
+        "static-favicon": "~1.0.0",
+        "morgan": "~1.0.0",
+        "cookie-parser": "~1.0.1",
+        "body-parser": "~1.0.0",
+        "debug": "~0.7.4",
+        "jade": "*",
+        "mongodb": "*",
+        "mongoskin": "*"
+    },
     "devDependencies": {
-        "mocha": "^1.18.2",
-        "express": "^4.0.0",
-        "morgan": "^1.0.0",
-        "chai": "^1.9.1",
         "grunt": "^0.4.4",
-        "grunt-react": "^0.8.2",
         "grunt-contrib-watch": "^0.6.1",
         "grunt-sass": "~0.12.1",
         "grunt-autoprefixer": "~0.7.3"
     },
     "private": true,
     "scripts": {
-        "watch": "grunt sass && grunt react && grunt watch",
+        "watch": "grunt sass && grunt watch",
         "react": "npm run watch",
         "server": "node server.js"
     }
