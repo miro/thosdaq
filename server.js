@@ -1,10 +1,18 @@
 
-
+// Actual server stuff
 var express = require('express');
 var app = express();
 var logger = require('morgan');
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
 
+// MongoDB stuff
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/test');
+
+// Utilities
+var moment = require('moment');
+
+// Init middleware
 app.use(logger("tiny"));
 app.use(bodyParser());
 app.use(express.static(__dirname + '/app')); // static file hosting middleware
@@ -12,7 +20,8 @@ app.use(express.static(__dirname + '/app')); // static file hosting middleware
 
 app.post('/log', function(req, res) {
     console.log("drink post");
-    console.dir(req.body);
+    console.log(moment().format('HH:mm'));
+    console.log(req.body);
     res.send(req.body);
 });
 
