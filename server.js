@@ -41,12 +41,14 @@ var UserModel = mongoose.model('User', UserSchema);
 var validateUser = function(req, res, cb) {
 
     if (!req.body.user || !req.body.password) {
+        console.log(req.body);
         res.send("Invalid request", 400);
         return false;
     }
     
     var user = req.body.user;
     var password = req.body.password;
+    console.log("PARAMS", user, password);
 
     UserModel.findOne({'name': user}, 'name password', function(error, result) {
         
@@ -96,7 +98,8 @@ app.post('/log', function(req, res) {
 app.post('/login', function(req,res) {
     var user = validateUser(req, res, function(user) {
         if (!user) {
-            res.send("Authentication error", 400);
+            console.log(user);
+            res.send("Authentication error", 401);
         }
 
         res.send("Authentication OK", 200);

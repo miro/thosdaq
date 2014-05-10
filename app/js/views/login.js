@@ -26,13 +26,13 @@ define([
         },
 
         _login: function() {
-            console.log("halleluja");
+
             var username = this.$el.find('#username').val();
             var password = this.$el.find('#password').val();
 
             credentials.loginAsync(username, password)
                 .then(function() {
-                    app.navigate('invest/');
+                    app.navigate('invest');
                 })
                 .fail(function(jqXHR, textStatus, errorThrown) {
                     if (jqXHR.status === 0) {

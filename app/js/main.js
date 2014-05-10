@@ -26,16 +26,25 @@ require.config({
 // Load main module to start the app
 require([
 	'backbone',
+	'underscore',
 	'router',
 	'app'
 ], function(
 	Backbone,
+	_,
 	Router,
-	Application
+	app
 ) {
 
-	var router = new Router();
+	app.router = new Router();
 	Backbone.history.start();
+
+	// Shortcut for navigation
+	app.navigate = function (route) {
+		app.router.navigate(route, {trigger: true});
+	};
+
+
 	console.log("App started");
-	return Application;
+	return app;
 });

@@ -3,21 +3,35 @@
 define([
     'marionette',
     'app',
-    'views/login'
+    'credentials',
+    'views/login',
+    'views/invest'
 ], function(
     Marionette,
     app,
-    LoginView
+    credentials,
+    LoginView,
+    InvestView
 ) {
 
     return Marionette.AppRouter.extend({
         
         routes: {
-            "(/)": "index"
+            "": "index",
+            "invest": "invest"
         },
 
         index: function() {
             app.mainRegion.show(new LoginView());
+        },
+
+        invest: function() {
+            if (credentials.authenticated()) {
+                app.mainRegion.show(new InvestView());
+            }
+            else {
+                app.navigate('');
+            }
         }
     });
 });

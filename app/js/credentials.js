@@ -37,8 +37,11 @@ define([
 
             return $.ajax({
                 url: 'http://muro.spinni.org/api/login',
+                //url: 'http://localhost:3000/login',
                 type: "POST",
-                data: { user: username, password: password }
+                datatype : "json",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({ user: username, password: password })
             }).then(function() {
                 // Authentication was successful -> save login credentials to local storage
                 credentials._set(username, password);
