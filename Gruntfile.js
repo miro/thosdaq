@@ -25,6 +25,14 @@ module.exports = function(grunt) {
                 options: {
                     livereload: true
                 }
+            },
+
+            uberwatch: {
+                files: 'app/**/*',
+                tasks: [],
+                options: {
+                    livereload: true
+                }
             }
         }
     });
