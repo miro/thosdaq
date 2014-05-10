@@ -83,7 +83,7 @@ app.post('/log', function(req, res) {
 
 app.get('/log', function(req, res) {
     res.send("This is the THOSDAQ-API", 200);
-}
+});
 
 app.post('/login', function(req,res) {
     if (!req.body.user || !req.body.password) {
