@@ -78,20 +78,27 @@ var validateUser = function(req, res, cb) {
 app.use(express.static(__dirname + '/app')); // static file hosting middleware
 
 app.post('/log', function(req, res) {
-    var user = validateUser(req, res);
+    var user = validateUser(req, res, function(result) {
+        if (!result) {
+            res.send("Logging error", 400);
+        } else {
 
-    var newLog = new LogModel({
-        type: req.body.type,
-        value: req.body.value,
-        author: req.body.author,
-        fakeCompany: req.body.fakeCompany
-    });
-    newLog.save(function(error, newLog) {
-        if (error) {
-            res.send("Error when saving to DB", 400);
+            var newLog = new LogModel({
+                type: req.body.type,
+                value: req.body.value,
+                author: req.body.author,
+                fakeCompany: req.body.fakeCompany
+            });
+            newLog.save(function(error, newLog) {
+                if (error) {
+                    res.send("Error when saving to DB", 400);
+                }
+                res.json(200, newLog);
+            });
         }
-        res.send(newLog, 200);
     });
+
+    
 });
 
 
