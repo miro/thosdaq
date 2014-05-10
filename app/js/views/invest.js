@@ -18,11 +18,22 @@ define([
         className: 'invest-wrap',
 
         events: {
-            'click  #logout-button': "_logout"
+            'click  #logout-button': '_logout',
+            'click  .investment-btn': 'makeInvestment'
+
         },
 
         initialize: function() {
             
+        },
+
+        makeInvestment: function(event) {
+
+            var author = this.$el.find('#author');
+            var type = $(event.target).text();
+            var points = $(event.target).data('points');
+
+            console.log(event.target.text());
         },
 
         _logout: function() {
