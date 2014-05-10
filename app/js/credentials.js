@@ -36,9 +36,9 @@ define([
             password = password || localStorage["password"];
 
             return $.ajax({
-                url: config.endpoint.url(constants.endpoints.login),
-                type: "GET",
-                data: { username: username, password: password }
+                url: 'http://muro.spinni.org/api/login',
+                type: "POST",
+                data: { user: username, password: password }
             }).then(function() {
                 // Authentication was successful -> save login credentials to local storage
                 credentials._set(username, password);
