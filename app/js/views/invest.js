@@ -29,11 +29,33 @@ define([
 
         makeInvestment: function(event) {
 
-            var author = this.$el.find('#author');
+            var author = this.$el.find('#author').val();
             var type = $(event.target).text();
             var points = $(event.target).data('points');
 
-            console.log(event.target.text());
+            if (confirm("Make investment to " + type + "?")) {
+
+                var payload = {
+                    user: localStorage["username"], 
+                    password: localStorage["password"],
+                    author: author,
+                    value: points,
+                    type: type
+                };
+
+                return $.ajax({
+                    url: 'http://localhost:3000/log',
+                    type: "POST",
+                    datatype: "json",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(payload)
+                }).then(function() {
+                    alert("Investment made.");
+                }).fail(function() {
+                    alert("ERROR - no connection to THOSDAQ Mainframe");
+                });
+
+            }
         },
 
         _logout: function() {
