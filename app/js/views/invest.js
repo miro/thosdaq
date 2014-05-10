@@ -32,12 +32,13 @@ define([
             var author = this.$el.find('#author').val();
             var type = $(event.target).text();
             var points = $(event.target).data('points');
+            var userObject = credentials.get();
 
             if (confirm("Make investment to " + type + "?")) {
 
                 var payload = {
-                    user: localStorage["username"], 
-                    password: localStorage["password"],
+                    user: userObject.username,
+                    password: userObject.password,
                     author: author,
                     value: points,
                     type: type
