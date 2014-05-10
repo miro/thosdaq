@@ -81,7 +81,15 @@ app.post('/log', function(req, res) {
     res.send(req.body);
 });
 
+app.get('/log', function(req, res) {
+    res.send("This is the THOSDAQ-API", 200);
+}
+
 app.post('/login', function(req,res) {
+    if (!req.body.user || !req.body.password) {
+        res.send("invalid request", 400);
+    }
+
     console.log(req.body.password);
     var temp = validateUser(req.body.user, req.body.password);
     res.send(temp, 200);
