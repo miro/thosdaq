@@ -38,27 +38,35 @@ var UserModel = mongoose.model('User', UserSchema);
 
 
 // Utility functions -----------------------------------
-var validateUser = function(user, password) {
+var validateUser = function(req, res, cb) {
+
+    if (!req.body.user || !req.body.password) {
+        res.send("Invalid request", 400);
+        return false;
+    }
+    
+    var user = req.body.user;
+    var password = req.body.password;
 
     UserModel.findOne({'name': user}, 'name password', function(error, result) {
         
         if (error) {
-            console.log("ERROR in user authentication", ERR);
-            return false;
+            // res.send("ERROR in user authentication", 400);
+            cb(false);
         }
 
-        if (result.length === 0) {
-            console.log("no user found");
-            return false;
+        else if (!result || result.length === 0) {
+            // res.send("no user found", 400);
+            cb(false);
         }
 
-        if (passwordHash.verify(password, result.password)) {
-            console.log("jeee");
-            return result.user;
+        else if (passwordHash.verify(password, result.password)) {
+            console.log("User found, PW ok");
+            cb(result);
         }
         else {
-            console.log("wrong password");
-            return false;
+            res.send("wrong password", 401);
+            cb(false);
         }
     });
 };
@@ -68,34 +76,38 @@ var validateUser = function(user, password) {
 app.use(express.static(__dirname + '/app')); // static file hosting middleware
 
 app.post('/log', function(req, res) {
-    console.log("drink post");
-    console.log(moment().format('HH:mm'));
-    console.log(req.body);
+    var user = validateUser(req, res);
 
     var newLog = new LogModel({
         type: req.body.type,
-        value: 10
+        value: req.body.value,
+        author: req.body.author,
+        fakeCompany: req.body.fakeCompany
     });
-    newLog.save();
-
-    res.send(req.body);
+    newLog.save(function(error, newLog) {
+        if (error) {
+            res.send("Error when saving to DB", 400);
+        }
+        res.send(newLog, 200);
+    });
 });
+
+
+app.post('/login', function(req,res) {
+    var user = validateUser(req, res, function(user) {
+        if (!user) {
+            res.send("Authentication error", 400);
+        }
+
+        res.send("Authentication OK", 200);
+    });
+});
+
+
 
 app.get('/log', function(req, res) {
     res.send("This is the THOSDAQ-API", 200);
 });
-
-app.post('/login', function(req,res) {
-    if (!req.body.user || !req.body.password) {
-        res.send("invalid request", 400);
-    }
-
-    console.log(req.body.password);
-    var temp = validateUser(req.body.user, req.body.password);
-    res.send(temp, 200);
-});
-
-
 
 // -----------------------------------------------------
 // Launch server
