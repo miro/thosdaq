@@ -25,8 +25,9 @@ define([
 
         },
 
-        initialize: function() {
-            
+        onShow: function() {
+            // Find previous author name from localStorage, if it exists
+            this.$el.find('#author').val(localStorage["investmentAuthor"]);
         },
 
         makeInvestment: function(event) {
@@ -36,6 +37,8 @@ define([
             var type = $(event.target).text();
             var points = $(event.target).data('points');
             var userObject = credentials.get();
+
+            localStorage["investmentAuthor"] = author;
 
             if (confirm("Make investment to " + type + "?")) {
 
@@ -55,7 +58,7 @@ define([
                     data: JSON.stringify(payload)
                 }).then(function(response) {
                     self.$el.find('.investments-done').append(
-                        '<p>' + response.type + ' @ ' + moment(response.timestamp).format('HH:mm') + '</p>');
+                        '<p>' + response.type + ' @ ' + moment(response.timestamp).format('HH:mm') + ' ' + response.company + '</p>');
                 }).fail(function() {
                     alert("ERROR - no connection to THOSDAQ Mainframe");
                 });
