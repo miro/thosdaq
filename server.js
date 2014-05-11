@@ -25,7 +25,7 @@ app.use(bodyParser());
 
 
 // Mongoose Schema ---------------------------------------
-var LogSchema = new Schema({
+var InvestmentSchema = new Schema({
     type: String,
     value: Number,
     author: String,
@@ -35,7 +35,7 @@ var LogSchema = new Schema({
     companyRank: Number,
     companyProfit: String
 });
-var LogModel = mongoose.model('Log', LogSchema);
+var InvestmentModel = mongoose.model('Investment', InvestmentSchema);
 
 var UserSchema = new Schema({
     name: String,
@@ -96,7 +96,7 @@ app.post('/invest', function(req, res) {
 
             var company = getRandomCompany();
 
-            var newLog = new LogModel({
+            var newInvestment = new InvestmentModel({
                 type: req.body.type,
                 value: req.body.value,
                 author: req.body.author,
@@ -107,11 +107,11 @@ app.post('/invest', function(req, res) {
                 companyRank: parseInt(company.Rank, 10),
                 companyProfit: company.Profit
             });
-            newLog.save(function(error, newLog) {
+            newInvestment.save(function(error, newInvestment) {
                 if (error) {
                     res.send("Error when saving to DB", 400);
                 }
-                res.json(200, newLog);
+                res.json(200, newInvestment);
             });
         }
     });
