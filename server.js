@@ -78,7 +78,7 @@ var validateUser = function(req, res, cb) {
 // Route handlers --------------------------------------
 app.use(express.static(__dirname + '/app')); // static file hosting middleware
 
-app.post('/log', function(req, res) {
+app.post('/invest', function(req, res) {
     var user = validateUser(req, res, function(result) {
         if (!result) {
             res.send("Logging error", 400);
@@ -117,7 +117,7 @@ app.post('/login', function(req,res) {
 
 
 
-app.get('/log', function(req, res) {
+app.get('/invest', function(req, res) {
     res.send("This is the THOSDAQ-API", 200);
 });
 
