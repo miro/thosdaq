@@ -22,25 +22,29 @@ define([
         events: {
             'click  #logout-button': '_logout',
             'click  .investment-btn': 'makeInvestment'
+        },
 
+        ui: {
+            authorInput:            '#author',
+            doneInvestments:        '.investments-done'
         },
 
         onShow: function() {
             // Find previous author name from localStorage, if it exists
-            this.$el.find('#author').val(localStorage["investmentAuthor"]);
+            this.ui.authorInput.val(localStorage["investmentAuthor"]);
         },
 
         makeInvestment: function(event) {
             var self = this;
 
-            var author = this.$el.find('#author').val();
+            var author = this.ui.authorInput.val();
             var type = $(event.target).text();
             var points = $(event.target).data('points');
             var userObject = credentials.get();
 
             localStorage["investmentAuthor"] = author;
 
-            if (confirm("Make investment to " + type + "?")) {
+            if (confirm("Make an investment to " + type + "?")) {
 
                 var payload = {
                     user: userObject.username,
@@ -57,13 +61,17 @@ define([
                     contentType: "application/json; charset=utf-8",
                     data: JSON.stringify(payload)
                 }).then(function(response) {
-                    self.$el.find('.investments-done').append(
-                        '<p>' + response.type + ' @ ' + moment(response.timestamp).format('HH:mm') + ' ' + response.company + '</p>');
+                    self.addInvestmentInfo(response);
                 }).fail(function() {
                     alert("ERROR - no connection to THOSDAQ Mainframe");
                 });
 
             }
+        },
+
+        addInvestmentInfo: function(investment) {
+            this.ui.doneInvestments.append(
+            '<p>' + investment.type + ' @ ' + moment(investment.timestamp).format('HH:mm') + ' ' + investment.company + '</p>');
         },
 
         _logout: function() {
