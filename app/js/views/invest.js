@@ -70,8 +70,22 @@ define([
         },
 
         addInvestmentInfo: function(investment) {
-            this.ui.doneInvestments.append(
-            '<p>' + investment.type + ' @ ' + moment(investment.timestamp).format('HH:mm') + ' ' + investment.company + '</p>');
+            // Bit hacky, but oh well
+            this.ui.doneInvestments.prepend(
+                '<li class="list-group-item">' + 
+                    '<span class="badge">' + this.countInvestmentValue(investment) + ' k&euro;</span>' +
+
+                    '<b>' + investment.type + '</b>  ' + 
+                    '<span class="glyphicon glyphicon-time"></span> ' + moment(investment.timestamp).format('HH:mm') + ' ' +
+                    '<span class="glyphicon glyphicon-arrow-right"></span> ' + investment.company + 
+                '</li>'
+            );
+            this.$el.find('li.list-group-item').first().hide().fadeIn('slow');
+        },
+
+        countInvestmentValue: function(investment) {
+            var value = parseInt(investment.companyProfit, 10) * investment.value / 1000;
+            return Math.round(value * 100) / 100;
         },
 
         _logout: function() {
