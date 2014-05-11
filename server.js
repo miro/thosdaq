@@ -31,7 +31,9 @@ var LogSchema = new Schema({
     author: String,
     timestamp: String,
     fingerprint: String,
-    fakeCompany: String
+    company: String,
+    companyRank: Number,
+    companyProfit: String
 });
 var LogModel = mongoose.model('Log', LogSchema);
 
@@ -98,8 +100,12 @@ app.post('/invest', function(req, res) {
                 type: req.body.type,
                 value: req.body.value,
                 author: req.body.author,
-                fakeCompany: req.body.fakeCompany,
-                timestamp: new moment().toJSON()
+
+                timestamp: new moment().toJSON(),
+
+                company: company.Company,
+                companyRank: parseInt(company.Rank, 10),
+                companyProfit: company.Profit
             });
             newLog.save(function(error, newLog) {
                 if (error) {
