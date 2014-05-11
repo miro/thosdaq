@@ -56,7 +56,6 @@ var validateUser = function(req, res, cb) {
     
     var user = req.body.user;
     var password = req.body.password;
-    console.log("PARAMS", user, password);
 
     UserModel.findOne({'name': user}, 'name password', function(error, result) {
         
