@@ -55,7 +55,7 @@ define([
                     data: JSON.stringify(payload)
                 }).then(function(response) {
                     self.$el.find('.investments-done').append(
-                        '<p>' + response.type + ' @ ' + moment(response.date).format('HH:mm') + '</p>');
+                        '<p>' + response.type + ' @ ' + moment(response.timestamp).format('HH:mm') + '</p>');
                 }).fail(function() {
                     alert("ERROR - no connection to THOSDAQ Mainframe");
                 });

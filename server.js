@@ -26,7 +26,7 @@ var LogSchema = new Schema({
     type: String,
     value: Number,
     author: String,
-    date: { type: String, default: moment().toJSON() },
+    timestamp: String,
     fingerprint: String,
     fakeCompany: String
 });
@@ -56,12 +56,10 @@ var validateUser = function(req, res, cb) {
     UserModel.findOne({'name': user}, 'name password', function(error, result) {
         
         if (error) {
-            // res.send("ERROR in user authentication", 400);
             cb(false);
         }
 
         else if (!result || result.length === 0) {
-            // res.send("no user found", 400);
             cb(false);
         }
 
@@ -90,7 +88,8 @@ app.post('/log', function(req, res) {
                 type: req.body.type,
                 value: req.body.value,
                 author: req.body.author,
-                fakeCompany: req.body.fakeCompany
+                fakeCompany: req.body.fakeCompany,
+                timestamp: new moment().toJSON()
             });
             newLog.save(function(error, newLog) {
                 if (error) {
