@@ -48,7 +48,7 @@ define([
                 };
 
                 return $.ajax({
-                    url: 'http://localhost:3000/log',
+                    url: app.baseUrl + '/invest',
                     type: "POST",
                     datatype: "json",
                     contentType: "application/json; charset=utf-8",

@@ -1,10 +1,12 @@
 /* jshint sub:true */ // Allow function()['value']
 define([
     'underscore',
-    'jquery'
+    'jquery',
+    'app'
 ], function (
     _,
-    $
+    $,
+    app
 ) {
 
     var credentials = {
@@ -36,8 +38,8 @@ define([
             password = password || localStorage["password"];
 
             return $.ajax({
-                url: 'http://muro.spinni.org/api/login',
-                //url: 'http://localhost:3000/login',
+                //url: 'http://muro.spinni.org/api/login',
+                url: app.baseUrl + '/login',
                 type: "POST",
                 datatype : "json",
                 contentType: "application/json; charset=utf-8",

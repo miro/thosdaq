@@ -1,10 +1,12 @@
 /** @jsx React.DOM */
 define([
     'underscore',
-    'marionette'
+    'marionette',
+    'config'
 ], function(
     _,
-    Marionette
+    Marionette,
+    config
 ) {
 
     var application = new Backbone.Marionette.Application();
@@ -14,6 +16,7 @@ define([
     });
 
     application.data = {}; // Holder for all the app's data
+    application.baseUrl = config.baseUrl;
 
 
     // Event bus
