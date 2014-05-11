@@ -49,7 +49,7 @@ var UserModel = mongoose.model('User', UserSchema);
 var validateUser = function(req, res, cb) {
 
     if (!req.body.user || !req.body.password) {
-        console.log(req.body);
+        console.log("# FAILED login", user, password);
         res.send("Invalid request", 400);
         return false;
     }
@@ -111,6 +111,7 @@ app.post('/invest', function(req, res) {
                 if (error) {
                     res.send("Error when saving to DB", 400);
                 }
+                console.log('INVESTMENT #', newInvestment.author, newInvestment.type, newInvestment.timestamp);
                 res.json(200, newInvestment);
             });
         }
