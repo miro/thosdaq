@@ -1,6 +1,7 @@
 define([
     'underscore',
     'jquery',
+    'moment',
     'marionette',
     'app',
     'credentials',
@@ -8,6 +9,7 @@ define([
 ], function (
     _,
     $,
+    moment,
     Marionette,
     app,
     credentials,
@@ -28,6 +30,7 @@ define([
         },
 
         makeInvestment: function(event) {
+            var self = this;
 
             var author = this.$el.find('#author').val();
             var type = $(event.target).text();
@@ -50,8 +53,9 @@ define([
                     datatype: "json",
                     contentType: "application/json; charset=utf-8",
                     data: JSON.stringify(payload)
-                }).then(function() {
-                    alert("Investment made.");
+                }).then(function(response) {
+                    self.$el.find('.investments-done').append(
+                        '<p>' + response.type + ' @ ' + moment(response.date).format('HH:mm') + '</p>');
                 }).fail(function() {
                     alert("ERROR - no connection to THOSDAQ Mainframe");
                 });
