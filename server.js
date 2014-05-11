@@ -7,9 +7,10 @@ var bodyParser = require('body-parser');
 
 // MongoDB stuff
 var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
 mongoose.connect('mongodb://localhost/thosdaq');
 mongoose.set('debug', true);
+var db = require(__dirname + '/db-models.js');
+
 
 // Utilities
 var moment = require('moment');
@@ -24,24 +25,7 @@ app.use(bodyParser());
 
 
 
-// Mongoose Schema ---------------------------------------
-var InvestmentSchema = new Schema({
-    type: String,
-    value: Number,
-    author: String,
-    timestamp: String,
-    fingerprint: String,
-    company: String,
-    companyRank: Number,
-    companyProfit: String
-});
-var InvestmentModel = mongoose.model('Investment', InvestmentSchema);
 
-var UserSchema = new Schema({
-    name: String,
-    password: String
-});
-var UserModel = mongoose.model('User', UserSchema);
 
 
 
@@ -57,7 +41,7 @@ var validateUser = function(req, res, cb) {
     var user = req.body.user;
     var password = req.body.password;
 
-    UserModel.findOne({'name': user}, 'name password', function(error, result) {
+    db.UserModel.findOne({'name': user}, 'name password', function(error, result) {
         
         if (error) {
             cb(false);
@@ -95,7 +79,7 @@ app.post('/invest', function(req, res) {
 
             var company = getRandomCompany();
 
-            var newInvestment = new InvestmentModel({
+            var newInvestment = new db.InvestmentModel({
                 type: req.body.type,
                 value: req.body.value,
                 author: req.body.author,
