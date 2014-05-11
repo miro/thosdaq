@@ -15,6 +15,9 @@ mongoose.set('debug', true);
 var moment = require('moment');
 var passwordHash = require('password-hash');
 
+// Data
+var fortune = require(__dirname + '/app/fortune500.json');
+
 // Init middleware
 app.use(logger("tiny"));
 app.use(bodyParser());
@@ -74,6 +77,11 @@ var validateUser = function(req, res, cb) {
     });
 };
 
+var getRandomCompany = function() {
+    var randomIndex = Math.floor(Math.random() * (499 - 0 + 1));
+    return fortune.companies[randomIndex];
+};
+
 
 // Route handlers --------------------------------------
 app.use(express.static(__dirname + '/app')); // static file hosting middleware
@@ -83,6 +91,8 @@ app.post('/invest', function(req, res) {
         if (!result) {
             res.send("Logging error", 400);
         } else {
+
+            var company = getRandomCompany();
 
             var newLog = new LogModel({
                 type: req.body.type,
