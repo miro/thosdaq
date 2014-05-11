@@ -19,12 +19,14 @@ var passwordHash = require('password-hash');
 app.use(logger("tiny"));
 app.use(bodyParser());
 
-// -----------------------------------------------------
+
+
+// Mongoose Schema ---------------------------------------
 var LogSchema = new Schema({
     type: String,
     value: Number,
     author: String,
-    date: { type: Date, default: Date.now },
+    date: { type: String, default: moment().toJSON() },
     fingerprint: String,
     fakeCompany: String
 });
@@ -35,6 +37,7 @@ var UserSchema = new Schema({
     password: String
 });
 var UserModel = mongoose.model('User', UserSchema);
+
 
 
 // Utility functions -----------------------------------
