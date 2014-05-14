@@ -89,7 +89,15 @@ var calculateIndexPoint = function(latestIndexPoint) {
 	});
 };
 
-calculateIndexPoint();
+
+db.InvestmentIndexModel.findOne({}, {}, { sort: { 'timestamp' : -1 } }, function(err, model) {
+	if (err) {
+		console.log("Error while starting calculation");
+	}
+	else {
+		calculateIndexPoint(model);
+	}
+});
 
 
 // Utilities--------------------------------------
