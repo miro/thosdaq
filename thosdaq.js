@@ -44,7 +44,6 @@ var calculateIndexPoint = function(latestIndexPoint) {
 
 		// Dumb (like really) v1 version - go through all the investments
 		_.each(data, function(investment) {
-			
 			var timestamp = moment(investment.timestamp);
 			if (timestamp.isAfter(timerange.from) && timestamp.isBefore(timerange.to)) {
 				newIndexPoint.indexPoints = newIndexPoint.indexPoints + investment.value;
@@ -54,10 +53,10 @@ var calculateIndexPoint = function(latestIndexPoint) {
 
 		// Increase multiplier if conditions match
 		if (newIndexPoint.samples > 0 && newIndexPoint.samples >= latestIndexPoint.samples) {
-			newIndexPoint.indexMultiplier = newIndexPoint.indexMultiplier + 0.2;
+			newIndexPoint.indexMultiplier = newIndexPoint.indexMultiplier + 0.1;
 		}
 		else {
-			newIndexPoint.indexMultiplier = newIndexPoint.indexMultiplier - 0.2;
+			newIndexPoint.indexMultiplier = newIndexPoint.indexMultiplier - 0.1;
 			newIndexPoint.indexMultiplier = newIndexPoint.indexMultiplier < 1.0 ? 1.0 : newIndexPoint.indexMultiplier;
 		}
 
