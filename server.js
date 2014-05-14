@@ -15,6 +15,7 @@ var db = require(__dirname + '/db-models.js');
 // Utilities
 var moment = require('moment');
 var passwordHash = require('password-hash');
+var _ = require('underscore');
 
 // Data
 var fortune = require(__dirname + '/app/fortune500.json');
@@ -119,6 +120,25 @@ app.post('/login', function(req,res) {
 
 app.get('/invest', function(req, res) {
     res.send("This is the THOSDAQ-API", 200);
+});
+
+app.get('/thosdaq', function(req, res) {
+    db.InvestmentIndexModel.find({}, function(err, data) { // TODO get only latest 24hours?
+        if (err) {
+            console.log(err);
+            res.send("Error on DB-connection", 500);
+        }
+
+        var values = [];
+        _.each(data, function(indexPoint) {
+            values.push({
+                timestamp: indexPoint.timestamp,
+                value: indexPoint.indexPoints
+            });
+        });
+
+        res.json(200, values);
+    });
 });
 
 // -----------------------------------------------------
