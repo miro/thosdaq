@@ -123,7 +123,7 @@ app.get('/invest', function(req, res) {
 });
 
 app.get('/thosdaq', function(req, res) {
-    db.InvestmentIndexModel.find({}, function(err, data) { // TODO get only latest 24hours?
+    db.InvestmentIndexModel.find({}, {}, { sort: { 'timestamp' : 1 }}, function(err, data) { // TODO get only latest 24hours?
         if (err) {
             console.log(err);
             res.send("Error on DB-connection", 500);
