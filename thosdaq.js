@@ -82,6 +82,9 @@ var calculateIndexPoint = function(latestIndexPoint) {
 			else if (moment(result.timestamp).add('minutes', 15).isBefore(new moment())) {
 				calculateIndexPoint(result);
 			}
+			else {
+				process.exit(0);
+			}
 		});
 	});
 };
