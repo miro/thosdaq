@@ -15,6 +15,7 @@ var InvestmentSchema = new Schema({
 });
 var InvestmentModel = mongoose.model('Investment', InvestmentSchema);
 
+
 var UserSchema = new Schema({
     name: String,
     password: String
@@ -22,7 +23,17 @@ var UserSchema = new Schema({
 var UserModel = mongoose.model('User', UserSchema);
 
 
+var InvestmentIndexSchema = new Schema({
+    timestamp: String,
+    indexPoints: Number, // Integer
+    indexMultiplier: Number, // Float
+    samples: Number // amount of investment on this timeframe
+});
+var InvestmentIndexModel = mongoose.model('InvestmentIndex', InvestmentIndexSchema);
+
+
 module.exports = {
     UserModel: UserModel,
-    InvestmentModel: InvestmentModel
+    InvestmentModel: InvestmentModel,
+    InvestmentIndexModel: InvestmentIndexModel
 }

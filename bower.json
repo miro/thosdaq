@@ -19,6 +19,7 @@
     "marionette": "*",
     "bootstrap": "*",
     "moment": "~2.6.0",
-    "d3": "~3.4.6"
+    "d3": "~3.4.6",
+    "underscore": "~1.6.0"
   }
 }

@@ -17,7 +17,8 @@
         "mongoose": "*",
         "body-parser": "*",
         "moment": "*",
-        "password-hash": "*"
+        "password-hash": "*",
+        "underscore": "~1.6.0"
     },
     "devDependencies": {
         "grunt": "^0.4.4",
