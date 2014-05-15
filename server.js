@@ -133,7 +133,8 @@ app.get('/thosdaq', function(req, res) {
         _.each(data, function(indexPoint) {
             values.push({
                 timestamp: indexPoint.timestamp,
-                value: indexPoint.indexPoints
+                value: indexPoint.indexPoints,
+                investments: indexPoint.samples
             });
         });
 
