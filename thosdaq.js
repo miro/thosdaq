@@ -73,7 +73,7 @@ var calculateIndexPoint = function(latestIndexPoint) {
 
 		// Keep index at 1000
 		if (newIndexPoint.indexPoints < 1000) {
-			newIndexPoint.indexPoints = 1000;
+			newIndexPoint.indexPoints = 1000 + Math.floor(Math.random() * 20);
 		}
 
 		console.log("Index value ", newIndexPoint.indexPoints, " samples ", newIndexPoint.samples, " timestamp ", newIndexPoint.timestamp);
