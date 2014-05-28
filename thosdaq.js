@@ -5,11 +5,11 @@ mongoose.set('debug', true);
 var db = require(__dirname + '/db-models.js');
 
 // Utilities
-var moment = require('moment');
-var _ = require('underscore');
+var moment 	= require('moment');
+var _ 		= require('underscore');
 
 // "Globals"
-var indexStartingPoint = new moment('2014-05-11');
+var indexStartingPoint = new moment('2014-05-22');
 
 // "main" -----------------------------
 var calculateIndexPoint = function(latestIndexPoint) {
@@ -29,6 +29,10 @@ var calculateIndexPoint = function(latestIndexPoint) {
 				indexMultiplier: 1.0,
 				samples: 0
 			});
+		}
+		else if (moment(latestIndexPoint.timestamp).isAfter(moment())) {
+			console.log("No need to run THOSDAQ generator right now -> exit");	
+			process.exit(0);
 		}
 	
 		// Time range
