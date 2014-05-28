@@ -13,8 +13,9 @@ var indexStartingPoint = new moment('2014-05-22');
 
 // "main" -----------------------------
 var calculateIndexPoint = function(latestIndexPoint) {
+	var latestTimestamp = latestIndexPoint ? latestIndexPoint.timestamp : indexStartingPoint.toJSON();
 
-	db.InvestmentModel.find({}, function(err, data) {
+	db.InvestmentModel.find({timestamp: {$gte: latestTimestamp}}, function(err, data) {
 		if (err) {
 			console.log('Error while retrieving Investments:', err);
 			return false;
@@ -46,7 +47,7 @@ var calculateIndexPoint = function(latestIndexPoint) {
 			samples: 0
 		});
 
-		// Dumb (like really) v1 version - go through all the investments
+		// go through all the investments
 		_.each(data, function(investment) {
 			var timestamp = moment(investment.timestamp);
 			if (timestamp.isAfter(timerange.from) && timestamp.isBefore(timerange.to)) {
